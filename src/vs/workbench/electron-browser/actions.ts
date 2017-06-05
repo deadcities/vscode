@@ -1052,7 +1052,7 @@ export abstract class BaseNavigationAction extends Action {
 export class NavigateLeftAction extends BaseNavigationAction {
 
 	public static ID = 'workbench.action.navigateLeft';
-	public static LABEL = nls.localize('navigateLeft', "Move to the View on the Left");
+	public static LABEL = nls.localize('navigateLeft', "Navigate to the View on the Left");
 
 	constructor(
 		id: string,
@@ -1102,7 +1102,7 @@ export class NavigateLeftAction extends BaseNavigationAction {
 export class NavigateRightAction extends BaseNavigationAction {
 
 	public static ID = 'workbench.action.navigateRight';
-	public static LABEL = nls.localize('navigateRight', "Move to the View on the Right");
+	public static LABEL = nls.localize('navigateRight', "Navigate to the View on the Right");
 
 	constructor(
 		id: string,
@@ -1152,7 +1152,7 @@ export class NavigateRightAction extends BaseNavigationAction {
 export class NavigateUpAction extends BaseNavigationAction {
 
 	public static ID = 'workbench.action.navigateUp';
-	public static LABEL = nls.localize('navigateUp', "Move to the View Above");
+	public static LABEL = nls.localize('navigateUp', "Navigate to the View Above");
 
 	constructor(
 		id: string,
@@ -1183,7 +1183,7 @@ export class NavigateUpAction extends BaseNavigationAction {
 export class NavigateDownAction extends BaseNavigationAction {
 
 	public static ID = 'workbench.action.navigateDown';
-	public static LABEL = nls.localize('navigateDown', "Move to the View Below");
+	public static LABEL = nls.localize('navigateDown', "Navigate to the View Below");
 
 	constructor(
 		id: string,
