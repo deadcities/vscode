@@ -99,14 +99,14 @@ export class SwitchWindow extends Action {
 		const currentWindowId = this.windowService.getCurrentWindowId();
 
 		return this.windowsService.getWindows().then(workspaces => {
-			const placeHolder = nls.localize('switchWindowPlaceHolder', "Select a window");
+			const placeHolder = nls.localize('switchWindowPlaceHolder', "Select a window to switch to");
 			const picks = workspaces.map(w => ({
 				label: w.title,
 				description: (currentWindowId === w.id) ? nls.localize('current', "Current Window") : void 0,
 				run: () => this.windowsService.showWindow(w.id)
 			}));
 
-			this.quickOpenService.pick(picks, { placeHolder });
+			this.quickOpenService.pick(picks, { placeHolder, autoFocus: { autoFocusFirstEntry: true } });
 		});
 	}
 }
