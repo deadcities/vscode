@@ -4,6 +4,12 @@
 	"include": "./light_defaults.json",
 	"tokenColors": [
 		{
+			"scope": ["meta.embedded", "source.groovy.embedded"],
+			"settings": {
+				"foreground": "#000000ff"
+			}
+		},
+		{
 			"scope": "emphasis",
 			"settings": {
 				"fontStyle": "italic"
@@ -210,9 +216,9 @@
 		},
 		{
 			"scope": [
-				"string.comment.buffered.block.jade",
-				"string.quoted.jade",
-				"string.interpolated.jade",
+				"string.comment.buffered.block.pug",
+				"string.quoted.pug",
+				"string.interpolated.pug",
 				"string.unquoted.plain.in.yaml",
 				"string.unquoted.plain.out.yaml",
 				"string.unquoted.block.yaml",
@@ -237,11 +243,11 @@
 			}
 		},
 		{
-			"name": "JavaScript string interpolation ${}",
+			"name": "String interpolation",
 			"scope": [
 				"punctuation.definition.template-expression.begin",
 				"punctuation.definition.template-expression.end",
-				"punctuation.section.embedded.coffee"
+				"punctuation.section.embedded"
 			],
 			"settings": {
 				"foreground": "#0000ff"
@@ -313,6 +319,7 @@
 				"keyword.operator.expression",
 				"keyword.operator.cast",
 				"keyword.operator.sizeof",
+				"keyword.operator.instanceof",
 				"keyword.operator.logical.python"
 			],
 			"settings": {

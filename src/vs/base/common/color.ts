@@ -214,7 +214,7 @@ export class HSVA {
 			m = ((r - g) / delta) + 4;
 		}
 
-		return new HSVA(m * 60, s, cmax, rgba.a);
+		return new HSVA(Math.round(m * 60), s, cmax, rgba.a);
 	}
 
 	// from http://www.rapidtables.com/convert/color/hsv-to-rgb.htm
@@ -260,8 +260,22 @@ export class Color {
 	}
 
 	readonly rgba: RGBA;
-	get hsla(): HSLA { return HSLA.fromRGBA(this.rgba); }
-	get hsva(): HSVA { return HSVA.fromRGBA(this.rgba); }
+	private _hsla: HSLA;
+	get hsla(): HSLA {
+		if (this._hsla) {
+			return this._hsla;
+		} else {
+			return HSLA.fromRGBA(this.rgba);
+		}
+	}
+
+	private _hsva: HSVA;
+	get hsva(): HSVA {
+		if (this._hsva) {
+			return this._hsva;
+		}
+		return HSVA.fromRGBA(this.rgba);
+	}
 
 	constructor(arg: RGBA | HSLA | HSVA) {
 		if (!arg) {
@@ -269,8 +283,10 @@ export class Color {
 		} else if (arg instanceof RGBA) {
 			this.rgba = arg;
 		} else if (arg instanceof HSLA) {
+			this._hsla = arg;
 			this.rgba = HSLA.toRGBA(arg);
 		} else if (arg instanceof HSVA) {
+			this._hsva = arg;
 			this.rgba = HSVA.toRGBA(arg);
 		} else {
 			throw new Error('Invalid color ctor argument');
@@ -278,7 +294,7 @@ export class Color {
 	}
 
 	equals(other: Color): boolean {
-		return !!other && RGBA.equals(this.rgba, other.rgba);
+		return !!other && RGBA.equals(this.rgba, other.rgba) && HSLA.equals(this.hsla, other.hsla) && HSVA.equals(this.hsva, other.hsva);
 	}
 
 	/**
@@ -381,6 +397,22 @@ export class Color {
 		const b = this.rgba.b * thisA / a + rgba.b * colorA * (1 - thisA) / a;
 
 		return new Color(new RGBA(r, g, b, a));
+	}
+
+	flatten(...backgrounds: Color[]): Color {
+		const background = backgrounds.reduceRight((accumulator, color) => {
+			return Color._flatten(color, accumulator);
+		});
+		return Color._flatten(this, background);
+	}
+
+	private static _flatten(foreground: Color, background: Color) {
+		const backgroundAlpha = 1 - foreground.rgba.a;
+		return new Color(new RGBA(
+			backgroundAlpha * background.rgba.r + foreground.rgba.a * foreground.rgba.r,
+			backgroundAlpha * background.rgba.g + foreground.rgba.a * foreground.rgba.g,
+			backgroundAlpha * background.rgba.b + foreground.rgba.a * foreground.rgba.b
+		));
 	}
 
 	toString(): string {
